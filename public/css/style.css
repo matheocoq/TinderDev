@@ -201,3 +201,20 @@ form[name="registration_form"] button:hover{
 .ami-a{
     cursor: pointer;
 }
+
+.div-messsage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-envoyer{
+    background-color: rgb(3, 155, 229) !important;
+    border: 2px solid rgb(3, 155, 229) !important;
+    color: #ffffff !important;
+    display: block;
+}
+
+.center{
+    text-align: center;
+}
