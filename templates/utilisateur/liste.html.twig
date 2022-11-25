@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste{% endblock %}
+
+{% block body %}
+{% if app.user %}
+    <div class="filtre">
+        <form method="get">
+            <h5 style="display: inline-block;">Filtrer par langage :</h5>
+            {% for langage in langages %}
+                 <input class="bouton-langage" type="submit" name="recherche" value="{{langage.nom}}">
+            {% endfor %}
+        </form>
+    </div>
+    <h5>{{ utilisateurs|length }} utilisateurs en base de donnnées</h5>
+    <div class="liste-devellopeur">
+        {% for utilisateur in utilisateurs %}
+            {% if utilisateur.id != app.user.id %}
+            <div class="devellopeur">
+                <div>
+                    <h6>{{ utilisateur.username }}</h6>
+                    <div>
+                    {% for lelangage in utilisateur.langages %}
+                        <img class="image-langage" src="/img/{{ lelangage.image }}"></img>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div>
+                    {% set trouver = false %}
+                    {% for ami in app.user.amis %}
+                        {% if ami.ami.id == utilisateur.id %}
+                            {% set trouver = true %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <a class="ami-a"  data-id={{utilisateur.id}} id="non-ami-{{utilisateur.id}}" {% if trouver == false  %} style="display:none;" {% endif %}><img class="image-ami" src="/img/supprimer-lutilisateur.png"></img></a>
+                    <a class="ami-a"  data-id={{utilisateur.id}} id="ami-{{utilisateur.id}}" {% if trouver == true  %} style="display:none;" {% endif %}><img class="image-ami" src="/img/ajouter-un-ami.png"></img></a>
+                   
+                    
+                    
+                    <a href="{{ path('app_message') }}"><img class="image-message" src="/img/message.png"></img></a>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="info-connection">Vous devez être autentifier pour avoir accès à la liste des dévellopeurs</div>
+    <h5>{{ utilisateurs|length }} utilisateurs en base de donnnées</h5>
+{% endif %}
+{% endblock %}
